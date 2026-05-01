@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 import predict
 import numpy as np
-matplotlib.rcParams['font.family'] = 'sans-serif'
-matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 用于显示中文
-matplotlib.rcParams['axes.unicode_minus'] = False
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['SimHei']  # 用于显示中文
+plt.rcParams['axes.unicode_minus'] = False
 
 model = predict.EmotionInference(model_path='best_model.pth', vocab_path='vocab.json', config_path='config.json')
 
