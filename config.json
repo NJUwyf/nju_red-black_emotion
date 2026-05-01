@@ -1,0 +1,17 @@
+{
+  "embed_dim": 256,
+  "hidden_dim": 512,
+  "n_layers": 2,
+  "dropout": 0.5,
+  "output_dim": 6,
+  "max_len": 128,
+  "use_jieba": true,
+  "emotion_labels": [
+    "angry",
+    "fear",
+    "happy",
+    "neutral",
+    "sad",
+    "surprise"
+  ]
+}
