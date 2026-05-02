@@ -116,15 +116,15 @@ def compute_overall_sentiment(reviews):
 
     distributions = []
     for rev in reviews:
-        dist = analyze_sentiment(rev)
+        dist = analyze_sentiment(rev)   # 返回长度为6的概率向量
         distributions.append(dist)
 
-    # 计算平均分布
     n = len(distributions)
     avg_dist = [sum(d[i] for d in distributions) / n for i in range(6)]
 
-    # 综合得分：示例为积极情绪（索引0和1）的总和
-    overall_score = avg_dist[2]*2
+    valence = [0.0, 0.2, 1.0, 0.3, 0.1, 0.4]
+    overall_score = sum(p * c for p, c in zip(avg_dist, valence))
+
     return overall_score, avg_dist
 
 
@@ -241,6 +241,8 @@ def main():
 
             overall_score, avg_distribution = compute_overall_sentiment(reviews)
             st.markdown("#### 📊 综合情感指数")
+            if len(reviews)<5:
+                st.markdown("####注意，当前评价数量过少，情感计算不一定可靠！！！")
             st.metric(label="情感得分（积极倾向）", value=f"{overall_score:.2f}")
 
             st.markdown("#### 📈 情感分布图表")
