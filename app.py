@@ -156,11 +156,11 @@ def generate_sentiment_distribution_chart(distribution):
     
     # 添加图例，放在饼图右侧，避免遮挡
     ax.legend(wedges, EMOTION_LABELS,
-              title="情感类型",
+              title="type",
               loc="center left",
               bbox_to_anchor=(1, 0, 0.5, 1))   # 将图例置于饼图右侧外
     
-    ax.set_title("情感分布", fontsize=14, color="#6A1B9A", pad=15)
+    ax.set_title("distribution", fontsize=14, color="#6A1B9A", pad=15)
     fig.patch.set_facecolor('#f9f0ff')
     return fig
 
