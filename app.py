@@ -5,12 +5,23 @@ import matplotlib.pyplot as plt
 import matplotlib
 import predict
 import numpy as np
+import platform
+
 plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['SimHei']  # 用于显示中文
+system = platform.system()
+if system == 'Windows':
+    plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+elif system == 'Darwin':  # macOS
+    plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
+else:  # Linux
+    plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei', 'Noto Sans CJK SC']
 plt.rcParams['axes.unicode_minus'] = False
 
-model = predict.EmotionInference(model_path='best_model.pth', vocab_path='vocab.json', config_path='config.json')
+@st.cache_resource
+def model_generate():
+    return predict.EmotionInference(model_path='best_model.pth', vocab_path='vocab.json', config_path='config.json')
 
+model = model_generate()
 # ------------------------------
 # 页面基本配置 
 # ------------------------------
@@ -120,16 +131,18 @@ def compute_overall_sentiment(reviews):
 def generate_sentiment_distribution_chart(distribution):
     """
     根据平均情感分布生成环形图（饼图）。
-    优化点：使用图例代替外部标签，避免小扇区文字重叠。
     """
     # 稍微增大画布尺寸，为图例留出空间
     fig, ax = plt.subplots(figsize=(6, 6))
     colors = ["#F94144", "#F9844A", "#F9C74F", "#E9ECEF", "#4D9DE0", "#F72585"]
     
+    def my_autopct(pct):
+        return f'{pct:.1f}%' if pct >= 3 else ''
+    
     wedges, texts, autotexts = ax.pie(
         distribution,
         labels=None,                     
-        autopct='%1.1f%%',
+        autopct=my_autopct,              # 使用自定义过滤函数
         startangle=90,
         colors=colors,
         pctdistance=0.85,
