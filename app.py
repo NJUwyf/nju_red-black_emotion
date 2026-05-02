@@ -242,8 +242,8 @@ def main():
             overall_score, avg_distribution = compute_overall_sentiment(reviews)
             st.markdown("#### 📊 综合情感指数")
             if len(reviews)<5:
-                st.markdown("####注意，当前评价数量过少，情感计算不一定可靠！！！")
-            st.metric(label="情感得分（积极倾向）", value=f"{overall_score:.2f}")
+                st.markdown("##### 注意，当前评价数量过少，情感计算不一定可靠！！！")
+            st.metric(label="情感得分（积极倾向，范围为0到1）", value=f"{overall_score:.2f}")
 
             st.markdown("#### 📈 情感分布图表")
             col_left, col_center, col_right = st.columns([1, 2, 1])
